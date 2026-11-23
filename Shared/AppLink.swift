@@ -3,7 +3,8 @@ import Foundation
 
 /// The app's tabs, which `sprout://` links, the control and `-demoTab` can open.
 enum AppTab: String, CaseIterable, Codable {
-    case home
+    case today
+    case plants
     case settings
 }
 
@@ -42,7 +43,7 @@ struct OpenAppIntent: AppIntent {
     static let openAppWhenRun = true
 
     func perform() async throws -> some IntentResult {
-        PendingNavigation.park(.home)
+        PendingNavigation.park(.today)
         return .result()
     }
 }

@@ -1,22 +1,29 @@
+import SwiftData
 import SwiftUI
-import WidgetKit
 
 /// The tabs, plus the plumbing every screen shares: links from widgets, the appearance setting and
-/// keeping the widget snapshot current.
+/// keeping the widget snapshot and reminders current.
 struct RootView: View {
     @Environment(Store.self) private var store
     @Environment(AppSettings.self) private var settings
     @Environment(\.scenePhase) private var scenePhase
+    @Query(sort: \Plant.name) private var plants: [Plant]
 
-    /// `-demoTab settings` opens on that tab, for screenshots.
-    @State private var tab = UserDefaults.standard.string(forKey: "demoTab").flatMap(AppTab.init(rawValue:)) ?? .home
+    /// `-demoTab plants` opens on that tab, for screenshots.
+    @State private var tab = UserDefaults.standard.string(forKey: "demoTab").flatMap(AppTab.init(rawValue:)) ?? .today
     @State private var showPaywall = false
 
     var body: some View {
+        // Reading the plants here means any change to them (a watering, a new schedule) changes the
+        // snapshot, which saves it for the widgets and reschedules the reminders.
+        let snapshot = WidgetSync.snapshot(plants: plants, isPro: store.isPro)
         TabView(selection: $tab) {
-            HomeView(showPaywall: $showPaywall)
-                .tabItem { Label("Home", systemImage: "house.fill") }
-                .tag(AppTab.home)
+            TodayView(showPaywall: $showPaywall)
+                .tabItem { Label("Today", systemImage: "drop.fill") }
+                .tag(AppTab.today)
+            PlantsView(showPaywall: $showPaywall)
+                .tabItem { Label("Plants", systemImage: "leaf.fill") }
+                .tag(AppTab.plants)
             SettingsView(showPaywall: $showPaywall)
                 .tabItem { Label("Settings", systemImage: "gearshape.fill") }
                 .tag(AppTab.settings)
@@ -30,24 +37,13 @@ struct RootView: View {
         .onChange(of: scenePhase) {
             guard scenePhase == .active else { return }
             if let parked = PendingNavigation.take() { tab = parked }
-            updateWidgets()
+            // A new day can change what's due.
+            WidgetSync.push(WidgetSync.snapshot(plants: plants, isPro: store.isPro))
         }
-        .onChange(of: store.isPro) { updateWidgets() }
-        .task { updateWidgets() }
-    }
-
-    /// Resolves what the widgets show and reloads them if it changed. Call it whenever anything the
-    /// widgets display changes.
-    private func updateWidgets() {
-        let snapshot = WidgetSnapshot(
-            isPro: store.isPro,
-            headline: "Sprout",
-            detail: store.isPro ? "Pro unlocked" : "Tap to open",
-            updated: .now
-        )
-        if snapshot.save() {
-            WidgetCenter.shared.reloadAllTimelines()
-        }
+        .onChange(of: snapshot) { WidgetSync.push(snapshot) }
+        .onChange(of: settings.remindersOn) { WidgetSync.push(snapshot) }
+        .onChange(of: settings.reminderMinutes) { WidgetSync.push(snapshot) }
+        .task { WidgetSync.push(snapshot) }
     }
 }
 
@@ -55,4 +51,5 @@ struct RootView: View {
     RootView()
         .environment(Store())
         .environment(AppSettings())
+        .modelContainer(PlantStore.container)
 }

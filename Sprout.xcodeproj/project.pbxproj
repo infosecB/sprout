@@ -8,28 +8,41 @@
 
 /* Begin PBXBuildFile section */
 		08C9B59236A8DFC3619F077B /* SproutWidgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 069C8118AAB6F0A49F82C411 /* SproutWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		1BBBB8C2E4112F7F105DC660 /* CareKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E15388167A812900535737C /* CareKind.swift */; };
 		24D167D1050F458DC19D93AD /* Brand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EC7C29233CDE35EFD48943 /* Brand.swift */; };
 		298DE4770AB1789326B85452 /* ProFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8801A7E3464EC7694E1AEE5 /* ProFeatures.swift */; };
 		29FB3B128963B5425CB04486 /* Brand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EC7C29233CDE35EFD48943 /* Brand.swift */; };
+		360249E36329415FDF346D90 /* PlantsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D33A277360550F39E9A12B7 /* PlantsView.swift */; };
 		3D22D457E08C2237EAFD32B8 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 935E0B87D8DDA4130D990831 /* PrivacyInfo.xcprivacy */; };
+		4235328DFB1A21C5D782F0C2 /* Plant.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14A051A6816C23688C26CFA /* Plant.swift */; };
 		46F1806798A008B5CC67C7A4 /* SproutWidgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAC28761A1525AABC041202 /* SproutWidgets.swift */; };
+		480C5EA54AEEF229AF9EE3D3 /* CareKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E15388167A812900535737C /* CareKind.swift */; };
+		48E92EED1D64B6633CFCBF08 /* PlantDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE432FF50188C2856998CF9 /* PlantDetailView.swift */; };
 		61ACF56290EAC0DF5E907B70 /* Controls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBC70FE8759067F654620C4 /* Controls.swift */; };
 		62179320EEBF15E94C8E4A27 /* WidgetSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DCAA51B5E39B746CDBD974 /* WidgetSnapshot.swift */; };
-		71714CB1D1F6BE40AD6E5085 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35276BF4F0AFFA7288AE9EEC /* HomeView.swift */; };
+		678840DE77B30430F883842C /* PlantIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0D49A58C2DB5C3C0489771 /* PlantIntents.swift */; };
 		73F2AEE06EBD6BEDCB66A835 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB668F4A9AC24AD4D0B6080 /* PaywallView.swift */; };
 		74989865C4D185690D2D6466 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3E108E82BCFB3F5AB1F97C5 /* Assets.xcassets */; };
 		782C2E44FD4A2A1ABB9EA2C3 /* AppLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC34D327E4F6D028AB1096BE /* AppLink.swift */; };
+		7984677997D1479E047E36C4 /* PlantStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39F81C3543EA32527D63D1B /* PlantStore.swift */; };
+		7B2D67A963293D69A82EB463 /* LogCareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12BE7CB4F123E24CFD73BDE /* LogCareSheet.swift */; };
+		838562C8176A1896F183EDEC /* CareSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6876299B7F96382181CA130D /* CareSchedule.swift */; };
 		83E3380F3B975CDCF012E4D5 /* About.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60357BEEC4EE53C5E68E0B72 /* About.swift */; };
+		8910DC152D7C4C81331BA603 /* Reminders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D046F8CA284BED8580945B /* Reminders.swift */; };
 		8B0B8DEDF9DFB1D1AD854600 /* SproutApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70F61E07E32EA45C07E9692 /* SproutApp.swift */; };
+		963F22F8AD0796669B74175A /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542CFD1EA912362CD857A57D /* Components.swift */; };
 		9B9AD07C2372F5642C99D102 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5D984B9E0B076B305143B8 /* SettingsView.swift */; };
 		9EAF154DCEC10A9909445EE1 /* AppLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC34D327E4F6D028AB1096BE /* AppLink.swift */; };
 		A6938B84540E8A1B5709C221 /* Sprout.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 53D753EE93B3494211534F14 /* Sprout.storekit */; };
 		B04BDBE5DF99591BBC09E0C5 /* SharedDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D5685E47F6DA9C9334877B /* SharedDefaults.swift */; };
+		BA5BAA2DD3A7FB289998B075 /* PlantEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5CD46AB5D50F38A4BDAE78 /* PlantEditor.swift */; };
 		C1B02EEED656AFA5C7E7A453 /* SharedDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D5685E47F6DA9C9334877B /* SharedDefaults.swift */; };
 		C2D02D43E40CF7C4F89D2865 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C2A957C9A7E5E5428A8FEA /* RootView.swift */; };
 		C69211CFF1A9E0BFB14541EB /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0602E835FC8295B60F181BE2 /* Store.swift */; };
+		CFE7861AF36AFB80D2584735 /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6287A3C1E8374F105E59FE3A /* TodayView.swift */; };
 		E8DC0220DD046E2D9E524786 /* StatusWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C323E38C5338268E0B8358 /* StatusWidget.swift */; };
 		E9ABA6FA3959F9D492D1416D /* WidgetSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DCAA51B5E39B746CDBD974 /* WidgetSnapshot.swift */; };
+		EA089E90EF16161A3C2EAE66 /* WidgetSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA04262D5197E2F0C61D709 /* WidgetSync.swift */; };
 		ED948F875D90CE109B7D9B8D /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B5057955135CDE4F6F31BE /* AppSettings.swift */; };
 		F3A62B8BE295F63DE52CE6DF /* SproutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B897480BC46902F9B7E0C06F /* SproutTests.swift */; };
 		F605205D6BC8E2D05B292742 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A7FD1A3E119F9D874D77D36C /* PrivacyInfo.xcprivacy */; };
@@ -71,13 +84,21 @@
 		069C8118AAB6F0A49F82C411 /* SproutWidgets.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = SproutWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		09D5685E47F6DA9C9334877B /* SharedDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDefaults.swift; sourceTree = "<group>"; };
 		0EB668F4A9AC24AD4D0B6080 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
-		35276BF4F0AFFA7288AE9EEC /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		2C5CD46AB5D50F38A4BDAE78 /* PlantEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantEditor.swift; sourceTree = "<group>"; };
+		4CA04262D5197E2F0C61D709 /* WidgetSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetSync.swift; sourceTree = "<group>"; };
 		4EAC28761A1525AABC041202 /* SproutWidgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SproutWidgets.swift; sourceTree = "<group>"; };
 		53D753EE93B3494211534F14 /* Sprout.storekit */ = {isa = PBXFileReference; path = Sprout.storekit; sourceTree = "<group>"; };
+		542CFD1EA912362CD857A57D /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
 		5CBC70FE8759067F654620C4 /* Controls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Controls.swift; sourceTree = "<group>"; };
+		5E0D49A58C2DB5C3C0489771 /* PlantIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantIntents.swift; sourceTree = "<group>"; };
+		5E15388167A812900535737C /* CareKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareKind.swift; sourceTree = "<group>"; };
 		60357BEEC4EE53C5E68E0B72 /* About.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = About.swift; sourceTree = "<group>"; };
+		6287A3C1E8374F105E59FE3A /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
+		66D046F8CA284BED8580945B /* Reminders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminders.swift; sourceTree = "<group>"; };
+		6876299B7F96382181CA130D /* CareSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareSchedule.swift; sourceTree = "<group>"; };
 		68DCAA51B5E39B746CDBD974 /* WidgetSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetSnapshot.swift; sourceTree = "<group>"; };
 		70C2A957C9A7E5E5428A8FEA /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		7D33A277360550F39E9A12B7 /* PlantsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantsView.swift; sourceTree = "<group>"; };
 		85EC7C29233CDE35EFD48943 /* Brand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brand.swift; sourceTree = "<group>"; };
 		935E0B87D8DDA4130D990831 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		9D5D984B9E0B076B305143B8 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -86,9 +107,13 @@
 		B70F61E07E32EA45C07E9692 /* SproutApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SproutApp.swift; sourceTree = "<group>"; };
 		B897480BC46902F9B7E0C06F /* SproutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SproutTests.swift; sourceTree = "<group>"; };
 		C8C323E38C5338268E0B8358 /* StatusWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusWidget.swift; sourceTree = "<group>"; };
+		CDE432FF50188C2856998CF9 /* PlantDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantDetailView.swift; sourceTree = "<group>"; };
 		D1B5057955135CDE4F6F31BE /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		D39F81C3543EA32527D63D1B /* PlantStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantStore.swift; sourceTree = "<group>"; };
 		E3E108E82BCFB3F5AB1F97C5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EA1132B5A3BF1C3FD2E869B8 /* SproutTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SproutTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F12BE7CB4F123E24CFD73BDE /* LogCareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogCareSheet.swift; sourceTree = "<group>"; };
+		F14A051A6816C23688C26CFA /* Plant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plant.swift; sourceTree = "<group>"; };
 		F8801A7E3464EC7694E1AEE5 /* ProFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProFeatures.swift; sourceTree = "<group>"; };
 		FC34D327E4F6D028AB1096BE /* AppLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLink.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -100,6 +125,22 @@
 				B897480BC46902F9B7E0C06F /* SproutTests.swift */,
 			);
 			path = SproutTests;
+			sourceTree = "<group>";
+		};
+		1BBCEE11ECA2A1C1CDA59E33 /* Intents */ = {
+			isa = PBXGroup;
+			children = (
+				5E0D49A58C2DB5C3C0489771 /* PlantIntents.swift */,
+			);
+			path = Intents;
+			sourceTree = "<group>";
+		};
+		41D789BFA5EEDAD27565911E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F14A051A6816C23688C26CFA /* Plant.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		6629E5CDD2AF72FA59CCAA13 = {
@@ -131,7 +172,6 @@
 				60357BEEC4EE53C5E68E0B72 /* About.swift */,
 				D1B5057955135CDE4F6F31BE /* AppSettings.swift */,
 				E3E108E82BCFB3F5AB1F97C5 /* Assets.xcassets */,
-				35276BF4F0AFFA7288AE9EEC /* HomeView.swift */,
 				0EB668F4A9AC24AD4D0B6080 /* PaywallView.swift */,
 				935E0B87D8DDA4130D990831 /* PrivacyInfo.xcprivacy */,
 				F8801A7E3464EC7694E1AEE5 /* ProFeatures.swift */,
@@ -139,8 +179,23 @@
 				9D5D984B9E0B076B305143B8 /* SettingsView.swift */,
 				B70F61E07E32EA45C07E9692 /* SproutApp.swift */,
 				0602E835FC8295B60F181BE2 /* Store.swift */,
+				1BBCEE11ECA2A1C1CDA59E33 /* Intents */,
+				7D00AC4E132613A5B0389326 /* Logic */,
+				41D789BFA5EEDAD27565911E /* Models */,
+				BF8E4530B1BB49BE60CDE56B /* Views */,
 			);
 			path = Sprout;
+			sourceTree = "<group>";
+		};
+		7D00AC4E132613A5B0389326 /* Logic */ = {
+			isa = PBXGroup;
+			children = (
+				6876299B7F96382181CA130D /* CareSchedule.swift */,
+				D39F81C3543EA32527D63D1B /* PlantStore.swift */,
+				66D046F8CA284BED8580945B /* Reminders.swift */,
+				4CA04262D5197E2F0C61D709 /* WidgetSync.swift */,
+			);
+			path = Logic;
 			sourceTree = "<group>";
 		};
 		A3C8C0699A644DD9E48CC7CE /* Products */ = {
@@ -153,11 +208,25 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		BF8E4530B1BB49BE60CDE56B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				542CFD1EA912362CD857A57D /* Components.swift */,
+				F12BE7CB4F123E24CFD73BDE /* LogCareSheet.swift */,
+				CDE432FF50188C2856998CF9 /* PlantDetailView.swift */,
+				2C5CD46AB5D50F38A4BDAE78 /* PlantEditor.swift */,
+				7D33A277360550F39E9A12B7 /* PlantsView.swift */,
+				6287A3C1E8374F105E59FE3A /* TodayView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		E29124DBAAB145DF7711D24C /* Shared */ = {
 			isa = PBXGroup;
 			children = (
 				FC34D327E4F6D028AB1096BE /* AppLink.swift */,
 				85EC7C29233CDE35EFD48943 /* Brand.swift */,
+				5E15388167A812900535737C /* CareKind.swift */,
 				09D5685E47F6DA9C9334877B /* SharedDefaults.swift */,
 				68DCAA51B5E39B746CDBD974 /* WidgetSnapshot.swift */,
 			);
@@ -313,15 +382,27 @@
 				782C2E44FD4A2A1ABB9EA2C3 /* AppLink.swift in Sources */,
 				ED948F875D90CE109B7D9B8D /* AppSettings.swift in Sources */,
 				24D167D1050F458DC19D93AD /* Brand.swift in Sources */,
-				71714CB1D1F6BE40AD6E5085 /* HomeView.swift in Sources */,
+				480C5EA54AEEF229AF9EE3D3 /* CareKind.swift in Sources */,
+				838562C8176A1896F183EDEC /* CareSchedule.swift in Sources */,
+				963F22F8AD0796669B74175A /* Components.swift in Sources */,
+				7B2D67A963293D69A82EB463 /* LogCareSheet.swift in Sources */,
 				73F2AEE06EBD6BEDCB66A835 /* PaywallView.swift in Sources */,
+				4235328DFB1A21C5D782F0C2 /* Plant.swift in Sources */,
+				48E92EED1D64B6633CFCBF08 /* PlantDetailView.swift in Sources */,
+				BA5BAA2DD3A7FB289998B075 /* PlantEditor.swift in Sources */,
+				678840DE77B30430F883842C /* PlantIntents.swift in Sources */,
+				7984677997D1479E047E36C4 /* PlantStore.swift in Sources */,
+				360249E36329415FDF346D90 /* PlantsView.swift in Sources */,
 				298DE4770AB1789326B85452 /* ProFeatures.swift in Sources */,
+				8910DC152D7C4C81331BA603 /* Reminders.swift in Sources */,
 				C2D02D43E40CF7C4F89D2865 /* RootView.swift in Sources */,
 				9B9AD07C2372F5642C99D102 /* SettingsView.swift in Sources */,
 				B04BDBE5DF99591BBC09E0C5 /* SharedDefaults.swift in Sources */,
 				8B0B8DEDF9DFB1D1AD854600 /* SproutApp.swift in Sources */,
 				C69211CFF1A9E0BFB14541EB /* Store.swift in Sources */,
+				CFE7861AF36AFB80D2584735 /* TodayView.swift in Sources */,
 				E9ABA6FA3959F9D492D1416D /* WidgetSnapshot.swift in Sources */,
+				EA089E90EF16161A3C2EAE66 /* WidgetSync.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,6 +412,7 @@
 			files = (
 				9EAF154DCEC10A9909445EE1 /* AppLink.swift in Sources */,
 				29FB3B128963B5425CB04486 /* Brand.swift in Sources */,
+				1BBBB8C2E4112F7F105DC660 /* CareKind.swift in Sources */,
 				61ACF56290EAC0DF5E907B70 /* Controls.swift in Sources */,
 				C1B02EEED656AFA5C7E7A453 /* SharedDefaults.swift in Sources */,
 				46F1806798A008B5CC67C7A4 /* SproutWidgets.swift in Sources */,

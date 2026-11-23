@@ -4,17 +4,45 @@ import Foundation
 /// they need (including whether Pro is unlocked) into this snapshot, saves it to the App Group and
 /// reloads the timelines when it changes. The widgets only read it.
 ///
-/// Add the fields your widgets need. Give new fields defaults (or make them optional) so a snapshot
-/// saved by an older version still decodes.
+/// Give new fields defaults (or make them optional) so a snapshot saved by an older version still
+/// decodes.
 struct WidgetSnapshot: Codable, Equatable {
+    /// One scheduled bit of care: water the Monstera, due on a day.
+    struct CareItem: Codable, Equatable {
+        var plant: String
+        var kind: CareKind
+        /// The start of the day it's due.
+        var due: Date
+    }
+
     var isPro: Bool = false
-    /// The big line on the widget.
-    var headline: String = "Sprout"
-    /// The smaller line under it.
-    var detail: String = "Tap to open"
+    var plantCount: Int = 0
+    /// Every scheduled task for the next couple of weeks, soonest first. Widgets work out what's due
+    /// on the day they're drawn, so they stay right past midnight without the app running.
+    var items: [CareItem] = []
     var updated: Date = .distantPast
 
-    static let placeholder = WidgetSnapshot(isPro: true, headline: "Sprout", detail: "Your summary here")
+    /// What needs doing on `date`, including anything overdue.
+    func due(on date: Date, calendar: Calendar = .current) -> [CareItem] {
+        let end = calendar.startOfDay(for: date)
+        return items.filter { $0.due <= end }
+    }
+
+    /// The first task after `date`.
+    func next(after date: Date, calendar: Calendar = .current) -> CareItem? {
+        let end = calendar.startOfDay(for: date)
+        return items.first { $0.due > end }
+    }
+
+    static let placeholder: WidgetSnapshot = {
+        let today = Calendar.current.startOfDay(for: .now)
+        return WidgetSnapshot(isPro: true, plantCount: 6, items: [
+            CareItem(plant: "Monstera", kind: .water, due: today),
+            CareItem(plant: "Fiddle Leaf Fig", kind: .water, due: today),
+            CareItem(plant: "Pothos", kind: .feed, due: today),
+            CareItem(plant: "Snake Plant", kind: .water, due: today.addingTimeInterval(3 * 86_400)),
+        ])
+    }()
 
     private static let key = "widgetSnapshot"
 

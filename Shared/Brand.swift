@@ -11,10 +11,37 @@ enum Brand {
     /// Text and symbols drawn on top of `accent`.
     static let onAccent = Color.white
 
-    /// Screen background. Dynamic, so it works in light and dark mode.
-    static let background = Color(uiColor: .systemGroupedBackground)
+    /// Water: watering tasks and the drop button.
+    static let water = Color(red: 0.231, green: 0.510, blue: 0.769)
+    /// Feeding (fertiliser) tasks.
+    static let feed = Color(red: 0.788, green: 0.584, blue: 0.157)
+    /// Healthy and done: "All caught up", pruning.
+    static let leaf = Color(red: 0.310, green: 0.541, blue: 0.357)
+
+    /// Screen background: a warm, potting-shed cream in light mode, the system's in dark mode.
+    static let background = Color(uiColor: UIColor { traits in
+        traits.userInterfaceStyle == .dark
+            ? .systemGroupedBackground
+            : UIColor(red: 0.969, green: 0.949, blue: 0.925, alpha: 1)
+    })
     /// Cards and grouped rows on top of `background`.
-    static let surface = Color(uiColor: .secondarySystemGroupedBackground)
+    static let surface = Color(uiColor: UIColor { traits in
+        traits.userInterfaceStyle == .dark ? .secondarySystemGroupedBackground : .white
+    })
+
+    /// Fill colours for plants without a photo, picked per plant (`Plant.tint`).
+    static let plantTints: [Color] = [
+        leaf,
+        Color(red: 0.494, green: 0.627, blue: 0.459),   // sage
+        accent,
+        Color(red: 0.337, green: 0.549, blue: 0.533),   // eucalyptus
+        Color(red: 0.588, green: 0.420, blue: 0.565),   // orchid
+        feed,
+    ]
+
+    static func plantTint(_ index: Int) -> Color {
+        plantTints[((index % plantTints.count) + plantTints.count) % plantTints.count]
+    }
 
     /// Display type: headings, big numbers, the paywall title.
     static func font(_ size: CGFloat, weight: Font.Weight = .bold) -> Font {
@@ -38,5 +65,6 @@ extension View {
     func card(padding: CGFloat = 18) -> some View {
         self.padding(padding)
             .background(Brand.surface, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
+            .shadow(color: .black.opacity(0.04), radius: 8, y: 2)
     }
 }

@@ -8,7 +8,7 @@ struct OpenAppControl: ControlWidget {
     var body: some ControlWidgetConfiguration {
         StaticControlConfiguration(kind: "OpenApp") {
             ControlWidgetButton(action: OpenAppIntent()) {
-                Label("Sprout", systemImage: "sparkles")
+                Label("Sprout", systemImage: "leaf.fill")
             }
         }
         .displayName("Open Sprout")
