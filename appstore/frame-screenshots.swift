@@ -35,9 +35,9 @@ struct Screenshot {
 
 /// In upload order. The first three show in search results, so they carry the main idea.
 let screenshots = [
-    Screenshot(file: "1-home", caption: "Your big idea,\nin four words", detail: "One line that backs it up"),
-    Screenshot(file: "2-settings", caption: "Make it\nyours", detail: "Light, dark and Sprout Pro"),
-    Screenshot(file: "3-home-dark", caption: "Easy on\nthe eyes", detail: "Full dark mode support", dark: true),
+    Screenshot(file: "1-today", caption: "Who's thirsty\ntoday?", detail: "One tap to log every watering"),
+    Screenshot(file: "2-plant", caption: "A care log for\nevery plant", detail: "Water, feed, repot, prune and notes"),
+    Screenshot(file: "3-plants-dark", caption: "Your whole\njungle", detail: "Grouped by room, light or dark", dark: true),
     Screenshot(file: "4-widgets", caption: "At a glance", detail: "Home Screen and Lock Screen widgets", pro: true),
 ]
 /// The iPhone screenshots the header and search artwork show, middle one in front.

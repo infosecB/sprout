@@ -104,7 +104,7 @@ struct PlantDetailView: View {
         let last = plant.last(kind)
         return HStack {
             rowLabel(kind, title: "\(kind.label) every \(every) \(every == 1 ? "day" : "days")",
-                     detail: last.map { "Last \($0.formatted(.relative(presentation: .named)))" } ?? "Not logged yet")
+                     detail: last.map { "\(kind.done) \(CareSchedule.ago($0))" } ?? "Not logged yet")
             if let due {
                 Text(CareSchedule.describe(due))
                     .font(.subheadline.weight(.bold))

@@ -94,6 +94,9 @@ struct ScheduleTests {
         #expect(CareSchedule.describe(day(4), from: day(0), calendar: calendar) == "In 4 days")
         #expect(CareSchedule.describe(day(-1), from: day(0), calendar: calendar) == "1 day late")
         #expect(CareSchedule.describe(day(-3), from: day(0), calendar: calendar) == "3 days late")
+        #expect(CareSchedule.ago(day(0, hour: 7), from: day(0), calendar: calendar) == "today")
+        #expect(CareSchedule.ago(day(-1), from: day(0), calendar: calendar) == "yesterday")
+        #expect(CareSchedule.ago(day(-9), from: day(0), calendar: calendar) == "9 days ago")
     }
 
     @MainActor @Test func feedingIsOnlyScheduledWithPro() throws {

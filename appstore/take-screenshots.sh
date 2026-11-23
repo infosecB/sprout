@@ -118,13 +118,13 @@ for TYPE in "$@"; do
         }
 
         # The first launch after installing is slow, so it's a throwaway.
-        shot warm-up -demoTab home
+        shot warm-up -demoData YES -demoTab today
         rm "$SHOTS/warm-up.png"
 
         # --- SHOTS: one line per screenshot, named N-name to match frame-screenshots.swift.
-        shot 1-home -demoTab home -appearance light
-        shot 2-settings -demoTab settings -appearance light
-        shot 3-home-dark -demoTab home -appearance dark
+        shot 1-today -demoData YES -demoTab today -appearance light
+        shot 2-plant -demoData YES -demoTab plants -demoPlant Monstera -appearance light
+        shot 3-plants-dark -demoData YES -demoTab plants -appearance dark
         # --- end of SHOTS
 
         xcrun simctl terminate "$UDID" "$BUNDLE_ID" 2>/dev/null || true

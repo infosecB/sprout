@@ -39,6 +39,15 @@ enum CareSchedule {
         }
     }
 
+    /// "today", "yesterday", "9 days ago".
+    static func ago(_ date: Date, from now: Date = .now, calendar: Calendar = .current) -> String {
+        switch -days(until: date, from: now, calendar: calendar) {
+        case ...0: "today"
+        case 1: "yesterday"
+        case let days: "\(days) days ago"
+        }
+    }
+
     /// Every scheduled task for `plants`, soonest first. Feeding is a Pro schedule, so it's only
     /// included with `includeFeeding`.
     static func tasks(for plants: [Plant], includeFeeding: Bool, calendar: Calendar = .current) -> [CareTask] {

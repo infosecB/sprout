@@ -7,11 +7,12 @@ struct PlantsView: View {
     @Query(sort: \Plant.name) private var plants: [Plant]
     @Binding var showPaywall: Bool
     @State private var adding = false
+    @State private var path: [Plant] = []
 
     var body: some View {
         GeometryReader { proxy in
             let margin = Brand.margin(for: proxy.size)
-            NavigationStack {
+            NavigationStack(path: $path) {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 22) {
                         if plants.isEmpty {
@@ -67,6 +68,15 @@ struct PlantsView: View {
                     }
                 }
                 .sheet(isPresented: $adding) { PlantEditor(plant: nil) }
+                #if DEBUG
+                // Screenshot mode: `-demoPlant Monstera` opens that plant.
+                .task {
+                    if let name = UserDefaults.standard.string(forKey: "demoPlant"), path.isEmpty,
+                       let plant = plants.first(where: { $0.name == name }) {
+                        path = [plant]
+                    }
+                }
+                #endif
             }
         }
     }
