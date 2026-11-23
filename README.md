@@ -61,7 +61,7 @@ for TestFlight and the App Store.
 | `SproutTests/` | Swift Testing unit tests |
 | `Config/` | Info.plist additions and entitlements |
 | `docs/` | The website (GitHub Pages): home, privacy, support |
-| `appstore/` | Screenshot capture and framing scripts; listing copy is in `APPSTORE.md` |
+| `appstore/` | Screenshot capture and framing scripts, `make-icon.swift` (draws the app icon in light, dark and tinted: `swift appstore/make-icon.swift`); listing copy is in `APPSTORE.md` |
 | `scripts/` | `run-app.sh` (build and launch in the simulator), `check-consistency.py` (duplicated facts and listing limits) |
 | `.claude/` | Claude Code hooks, permissions and skills |
 | `ci_scripts/`, `.github/workflows/release.yml` | Xcode Cloud setup and the tag-based release workflow |
