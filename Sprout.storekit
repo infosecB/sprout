@@ -1,0 +1,33 @@
+{
+  "identifier" : "A11F0001",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "4.99",
+      "familyShareable" : true,
+      "internalID" : "6740000101",
+      "localizations" : [
+        {
+          "description" : "Unlock every Sprout feature, forever.",
+          "displayName" : "Sprout Pro",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.brendanchamberlain.sprout.pro",
+      "referenceName" : "Sprout Pro",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}

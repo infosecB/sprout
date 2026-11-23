@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(xcodegen generate:*)",
+      "Bash(xcodebuild:*)",
+      "Bash(xcrun simctl list:*)",
+      "Bash(xcrun simctl boot:*)",
+      "Bash(xcrun simctl bootstatus:*)",
+      "Bash(xcrun simctl install:*)",
+      "Bash(xcrun simctl uninstall:*)",
+      "Bash(xcrun simctl launch:*)",
+      "Bash(xcrun simctl terminate:*)",
+      "Bash(xcrun simctl io:*)",
+      "Bash(xcrun simctl ui:*)",
+      "Bash(xcrun simctl status_bar:*)",
+      "Bash(xcrun simctl openurl:*)",
+      "Bash(scripts/run-app.sh:*)",
+      "Bash(scripts/check-consistency.py:*)",
+      "Bash(python3 scripts/check-consistency.py:*)",
+      "Bash(appstore/take-screenshots.sh:*)",
+      "Bash(swift appstore/frame-screenshots.swift)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(git tag --list:*)",
+      "Bash(git fetch:*)",
+      "Bash(gh run list:*)",
+      "Bash(gh run view:*)",
+      "Bash(gh run watch:*)",
+      "Bash(gh release list:*)",
+      "Bash(gh release view:*)",
+      "mcp__app-store-connect__list_apps",
+      "mcp__app-store-connect__app_status",
+      "mcp__app-store-connect__list_builds",
+      "mcp__app-store-connect__xcode_cloud_runs",
+      "mcp__app-store-connect__get_listing",
+      "mcp__app-store-connect__list_reviews"
+    ],
+    "ask": [
+      "Bash(git push:*)",
+      "Bash(gh workflow run:*)",
+      "Bash(gh release create:*)",
+      "Bash(gh repo create:*)",
+      "Bash(xcrun simctl erase:*)",
+      "Bash(xcrun simctl delete:*)",
+      "mcp__app-store-connect__create_app_version",
+      "mcp__app-store-connect__update_listing",
+      "mcp__app-store-connect__set_testflight_notes"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/session-start.sh",
+            "timeout": 60
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/sync-project.sh",
+            "timeout": 60
+          }
+        ]
+      }
+    ]
+  }
+}

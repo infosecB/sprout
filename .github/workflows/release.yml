@@ -1,0 +1,101 @@
+# Cuts a release: works out the next version, tags main with it and publishes a
+# GitHub release. Xcode Cloud's "Tag Changes" workflow picks up the new tag and
+# archives it; ci_scripts/ci_post_clone.sh stamps the tag into MARKETING_VERSION,
+# so nothing is committed back to main.
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: Which part of the version to bump
+        type: choice
+        options: [patch, minor, major]
+        default: patch
+      version:
+        description: Exact version instead (e.g. 1.2.0); overrides bump
+        type: string
+        required: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Only release from main
+        if: github.ref != 'refs/heads/main'
+        run: |
+          echo "::error::Run this workflow on main (got $GITHUB_REF)."
+          exit 1
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Work out the next version
+        id: version
+        env:
+          BUMP: ${{ inputs.bump }}
+          EXPLICIT: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+          # Release tags are bare versions (1.0, 1.0.1), as App Store Connect shows them.
+          latest=$(git tag --list | grep -E '^[0-9]+\.[0-9]+(\.[0-9]+)?$' | sort -V | tail -n1 || true)
+          latest=${latest:-0.0.0}
+
+          if [ -n "$EXPLICIT" ]; then
+            next=$EXPLICIT
+          else
+            IFS=. read -r major minor patch <<< "$latest"
+            patch=${patch:-0}
+            case "$BUMP" in
+              major) next="$((major + 1)).0.0" ;;
+              minor) next="$major.$((minor + 1)).0" ;;
+              patch) next="$major.$minor.$((patch + 1))" ;;
+            esac
+          fi
+
+          # App Store Connect accepts up to three period-separated integers.
+          if ! echo "$next" | grep -Eq '^[0-9]+\.[0-9]+(\.[0-9]+)?$'; then
+            echo "::error::'$next' isn't a valid version (use MAJOR.MINOR[.PATCH])."
+            exit 1
+          fi
+          if git rev-parse -q --verify "refs/tags/$next" >/dev/null; then
+            echo "::error::Tag $next already exists."
+            exit 1
+          fi
+          if [ "$(printf '%s\n%s\n' "$latest" "$next" | sort -V | tail -n1)" != "$next" ]; then
+            echo "::error::$next isn't newer than the latest release, $latest."
+            exit 1
+          fi
+
+          echo "Releasing $next (previous: $latest)"
+          echo "next=$next" >> "$GITHUB_OUTPUT"
+          echo "latest=$latest" >> "$GITHUB_OUTPUT"
+
+      - name: Tag main
+        env:
+          VERSION: ${{ steps.version.outputs.next }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "$VERSION" -m "Sprout $VERSION"
+          git push origin "refs/tags/$VERSION"
+
+      - name: Publish the GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.next }}
+          LATEST: ${{ steps.version.outputs.latest }}
+        run: |
+          args=(--title "Sprout $VERSION" --generate-notes --verify-tag)
+          if [ "$LATEST" != "0.0.0" ]; then
+            args+=(--notes-start-tag "$LATEST")
+          fi
+          gh release create "$VERSION" "${args[@]}"
