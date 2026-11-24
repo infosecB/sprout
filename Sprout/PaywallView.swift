@@ -9,29 +9,30 @@ struct PaywallView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 24) {
-                    VStack(spacing: 10) {
-                        Image(systemName: store.isPro ? "checkmark.seal.fill" : "star.circle.fill")
-                            .font(.system(size: 64))
-                            .foregroundStyle(Brand.accent)
+                    VStack(spacing: 8) {
+                        Image(systemName: store.isPro ? "checkmark.seal" : "camera.macro")
+                            .font(.system(size: 40, weight: .light))
+                            .foregroundStyle(store.isPro ? Brand.accent : Brand.leaf)
                             .symbolEffect(.bounce, value: store.isPro)
+                            .padding(.bottom, 4)
                         Text("Sprout Pro")
-                            .font(Brand.font(34, weight: .heavy))
+                            .font(Brand.font(34, weight: .medium))
                         Text("One purchase, yours forever.")
-                            .font(Brand.font(17, weight: .medium))
+                            .font(Brand.font(18, weight: .regular))
+                            .italic()
                             .foregroundStyle(.secondary)
                     }
                     .padding(.top, 8)
 
-                    VStack(alignment: .leading, spacing: 16) {
+                    VStack(alignment: .leading, spacing: 18) {
                         ForEach(ProFeature.all, id: \.self) { feature in
-                            HStack(alignment: .top, spacing: 14) {
+                            HStack(alignment: .firstTextBaseline, spacing: 14) {
                                 Image(systemName: feature.icon)
-                                    .font(.system(size: 17, weight: .semibold))
-                                    .foregroundStyle(Brand.onAccent)
-                                    .frame(width: 38, height: 38)
-                                    .background(Brand.accent, in: Circle())
+                                    .font(.system(size: 17, weight: .regular))
+                                    .foregroundStyle(Brand.accent)
+                                    .frame(width: 24)
                                 VStack(alignment: .leading, spacing: 2) {
-                                    Text(feature.title).font(Brand.font(17))
+                                    Text(feature.title).font(.body.weight(.semibold))
                                     Text(feature.detail)
                                         .font(.subheadline)
                                         .foregroundStyle(.secondary)
@@ -45,7 +46,7 @@ struct PaywallView: View {
 
                     if store.isPro {
                         Label("Pro is unlocked. Thanks!", systemImage: "checkmark.seal.fill")
-                            .font(Brand.font(18))
+                            .font(.body.weight(.semibold))
                             .foregroundStyle(Brand.accent)
                     } else {
                         Button {
@@ -60,11 +61,11 @@ struct PaywallView: View {
                                     Text(store.isLoading ? "Loading…" : "Unlock Pro")
                                 }
                             }
-                            .font(Brand.font(19))
-                            .frame(maxWidth: 380, minHeight: 52)
+                            .font(.body.weight(.semibold))
+                            .frame(maxWidth: 380, minHeight: 50)
                         }
                         .buttonStyle(.borderedProminent)
-                        .buttonBorderShape(.capsule)
+                        .buttonBorderShape(.roundedRectangle(radius: Brand.radius))
                         .tint(Brand.accent)
                         .disabled(store.isPurchasing)
 

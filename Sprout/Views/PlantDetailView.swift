@@ -53,10 +53,10 @@ struct PlantDetailView: View {
 
     private var header: some View {
         VStack(spacing: 10) {
-            PlantAvatar(plant: plant, size: 120)
-            Text(plant.name).font(Brand.font(28, weight: .heavy)).multilineTextAlignment(.center)
+            PlantAvatar(plant: plant, size: 104)
+            Text(plant.name).font(Brand.font(32, weight: .medium)).multilineTextAlignment(.center)
             if !plant.species.isEmpty {
-                Text(plant.species).font(.subheadline).italic().foregroundStyle(.secondary)
+                Text(plant.species).font(Brand.font(17, weight: .regular)).italic().foregroundStyle(.secondary)
             }
             if !plant.room.isEmpty {
                 Label(plant.room, systemImage: "house").font(.caption.weight(.semibold)).foregroundStyle(.secondary)
@@ -66,17 +66,18 @@ struct PlantDetailView: View {
                     .font(.callout)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
+                    .frame(maxWidth: 440)
                     .padding(.top, 4)
             }
         }
         .frame(maxWidth: .infinity)
-        .card(padding: 22)
+        .padding(.vertical, 8)
     }
 
     private var schedule: some View {
         VStack(spacing: 0) {
             scheduleRow(.water, every: plant.waterEvery)
-            Divider().padding(.leading, 52)
+            RowDivider(inset: 46)
             if store.isPro {
                 if plant.feedEvery > 0 {
                     scheduleRow(.feed, every: plant.feedEvery)
@@ -107,7 +108,7 @@ struct PlantDetailView: View {
                      detail: last.map { "\(kind.done) \(CareSchedule.ago($0))" } ?? "Not logged yet")
             if let due {
                 Text(CareSchedule.describe(due))
-                    .font(.subheadline.weight(.bold))
+                    .font(.subheadline.weight(.semibold))
                     .foregroundStyle(CareSchedule.days(until: due) <= 0 ? Brand.accent : .secondary)
             }
         }
@@ -116,12 +117,12 @@ struct PlantDetailView: View {
     private func rowLabel(_ kind: CareKind, title: String, detail: String) -> some View {
         HStack(spacing: 12) {
             Image(systemName: kind.symbol)
-                .font(.system(size: 15, weight: .semibold))
-                .foregroundStyle(.white)
-                .frame(width: 36, height: 36)
-                .background(kind.color, in: Circle())
+                .font(.system(size: 14, weight: .medium))
+                .foregroundStyle(kind.color)
+                .frame(width: 34, height: 34)
+                .background(kind.color.opacity(0.15), in: Circle())
             VStack(alignment: .leading, spacing: 2) {
-                Text(title).font(.body.weight(.semibold))
+                Text(title).font(.body.weight(.medium))
                 Text(detail).font(.caption).foregroundStyle(.secondary)
             }
             Spacer(minLength: 0)
@@ -131,19 +132,19 @@ struct PlantDetailView: View {
     }
 
     private var actions: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("Log care").font(Brand.font(17))
+        VStack(alignment: .leading, spacing: 8) {
+            SectionTitle(title: "Log care")
             HStack(spacing: 0) {
                 ForEach(CareKind.allCases) { kind in
                     VStack(spacing: 6) {
                         CareButton(kind: kind, size: 44) { tapped(kind) }
-                        Text(kind.label).font(.caption2.weight(.semibold)).foregroundStyle(.secondary)
+                        Text(kind.label).font(.caption).foregroundStyle(.secondary)
                     }
                     .frame(maxWidth: .infinity)
                 }
             }
+            .card(padding: 14)
         }
-        .card()
     }
 
     /// Water, feed and mist log straight away; the rest want a note.
@@ -160,8 +161,8 @@ struct PlantDetailView: View {
     @ViewBuilder private var photoStrip: some View {
         let photos = plant.photos
         if store.isPro && !photos.isEmpty {
-            VStack(alignment: .leading, spacing: 10) {
-                Text("Growth").font(Brand.font(17))
+            VStack(alignment: .leading, spacing: 8) {
+                SectionTitle(title: "Growth")
                 ScrollView(.horizontal) {
                     HStack(spacing: 10) {
                         ForEach(Array(photos.enumerated()), id: \.offset) { _, data in
@@ -170,29 +171,33 @@ struct PlantDetailView: View {
                                     .resizable()
                                     .scaledToFill()
                                     .frame(width: 110, height: 140)
-                                    .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                                    .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                             }
                         }
                     }
                 }
                 .scrollIndicators(.hidden)
+                .scrollClipDisabled()
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .card()
         }
     }
 
     private var log: some View {
         let visible = FreeLimits.visibleHistory(plant.history, isPro: store.isPro)
-        return VStack(alignment: .leading, spacing: 4) {
-            HStack {
-                Text("History").font(Brand.font(17))
-                Spacer()
-                Button("Add Entry", systemImage: "plus") { logging = .note }
-                    .labelStyle(.iconOnly)
-                    .font(.body.weight(.semibold))
-            }
-            .padding(.bottom, 6)
+        return VStack(alignment: .leading, spacing: 8) {
+            SectionTitle(title: "History", trailing: AnyView(
+                Button("Add entry") { logging = .note }
+                    .font(.subheadline.weight(.medium))
+                    .foregroundStyle(Brand.accent)
+            ))
+            historyRows(visible)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private func historyRows(_ visible: (shown: [CareEvent], hidden: Int)) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
             if visible.shown.isEmpty && visible.hidden == 0 {
                 Text("Nothing logged yet. Tap a button above when you care for \(plant.name).")
                     .font(.subheadline)
@@ -205,7 +210,7 @@ struct PlantDetailView: View {
                             CareLog.remove(event, in: context)
                         }
                     }
-                if event.id != visible.shown.last?.id { Divider().padding(.leading, 40) }
+                if event.id != visible.shown.last?.id { RowDivider(inset: 40) }
             }
             if visible.hidden > 0 {
                 Button { showPaywall = true } label: {
