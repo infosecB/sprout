@@ -60,83 +60,82 @@ struct TodayView: View {
     private var empty: some View {
         VStack(spacing: 14) {
             Image(systemName: "camera.macro")
-                .font(.system(size: 54, weight: .semibold))
+                .font(.system(size: 40, weight: .light))
                 .foregroundStyle(Brand.leaf)
             Text("Welcome to Sprout")
-                .font(Brand.font(28, weight: .heavy))
+                .font(Brand.font(28))
             Text("Add your plants and how often they like water. Sprout reminds you when each one is thirsty and keeps a log of everything you do for it.")
                 .font(.body)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
+                .frame(maxWidth: 420)
             Button {
                 adding = true
             } label: {
                 Label("Add your first plant", systemImage: "plus")
-                    .font(Brand.font(18))
+                    .font(.body.weight(.semibold))
                     .frame(maxWidth: 320, minHeight: 50)
             }
             .buttonStyle(.borderedProminent)
-            .buttonBorderShape(.capsule)
+            .buttonBorderShape(.roundedRectangle(radius: Brand.radius))
             .tint(Brand.accent)
             .padding(.top, 6)
         }
         .frame(maxWidth: .infinity)
-        .card(padding: 28)
-        .padding(.top, 20)
+        .padding(.top, 60)
     }
 
     private func summary(due: [CareTask], next: CareTask?) -> some View {
         let count = Set(due.map(\.plant.id)).count
-        return HStack(spacing: 18) {
-            ZStack {
-                Circle().fill((count == 0 ? Brand.leaf : Brand.water).opacity(0.15))
-                Image(systemName: count == 0 ? "checkmark" : "drop.fill")
-                    .font(.system(size: 30, weight: .bold))
-                    .foregroundStyle(count == 0 ? Brand.leaf : Brand.water)
-            }
-            .frame(width: 68, height: 68)
-            VStack(alignment: .leading, spacing: 4) {
-                Text(Date.now.formatted(.dateTime.weekday(.wide).month().day()).uppercased())
-                    .font(.caption.weight(.bold))
+        return VStack(alignment: .leading, spacing: 6) {
+            Text(Date.now.formatted(.dateTime.weekday(.wide).month(.wide).day()))
+                .font(.subheadline.weight(.medium))
+                .foregroundStyle(Brand.accent)
+            Text(count == 0 ? "All caught up." : count == 1 ? "One plant needs you." : "\(count) plants need you.")
+                .font(Brand.font(30, weight: .medium))
+            if count == 0, let next {
+                Text("Next up: \(next.plant.name), \(CareSchedule.describe(next.due).lowercased()).")
+                    .font(.subheadline)
                     .foregroundStyle(.secondary)
-                Text(count == 0 ? "All caught up" : count == 1 ? "1 plant needs you" : "\(count) plants need you")
-                    .font(Brand.font(24, weight: .heavy))
-                if count == 0, let next {
-                    Text("Next: \(next.plant.name), \(CareSchedule.describe(next.due).lowercased())")
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                }
             }
-            Spacer(minLength: 0)
         }
-        .card()
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.horizontal, 4)
+        .padding(.bottom, 4)
         .accessibilityElement(children: .combine)
     }
 
     @ViewBuilder private func dueSection(_ due: [CareTask]) -> some View {
         if !due.isEmpty {
-            VStack(spacing: 10) {
+            VStack(spacing: 8) {
                 SectionTitle(title: "Needs care", trailing: due.count > 1 ? AnyView(
                     Button("Do all") { log(due) }
-                        .font(.subheadline.weight(.bold))
+                        .font(.subheadline.weight(.semibold))
                         .foregroundStyle(Brand.accent)
                 ) : nil)
-                ForEach(due) { task in
-                    TaskRow(task: task) { log([task]) }
-                }
+                taskList(due, upcoming: false)
             }
         }
     }
 
     @ViewBuilder private func soonSection(_ soon: [CareTask]) -> some View {
         if !soon.isEmpty {
-            VStack(spacing: 10) {
+            VStack(spacing: 8) {
                 SectionTitle(title: "This week")
-                ForEach(soon) { task in
-                    TaskRow(task: task, upcoming: true) { log([task]) }
-                }
+                taskList(soon, upcoming: true)
             }
         }
+    }
+
+    /// Tasks as rows in one card, split by hairlines.
+    private func taskList(_ tasks: [CareTask], upcoming: Bool) -> some View {
+        VStack(spacing: 0) {
+            ForEach(tasks) { task in
+                TaskRow(task: task, upcoming: upcoming) { log([task]) }
+                if task.id != tasks.last?.id { RowDivider(inset: 76) }
+            }
+        }
+        .card(padding: 0)
     }
 
     // MARK: Logging
@@ -169,30 +168,34 @@ private struct TaskRow: View {
     let action: () -> Void
 
     var body: some View {
+        let late = CareSchedule.days(until: task.due) < 0
         HStack(spacing: 14) {
             NavigationLink(value: task.plant) {
                 HStack(spacing: 14) {
-                    PlantAvatar(plant: task.plant, size: 50)
-                    VStack(alignment: .leading, spacing: 3) {
+                    PlantAvatar(plant: task.plant, size: 46)
+                    VStack(alignment: .leading, spacing: 2) {
                         Text(task.plant.name)
-                            .font(Brand.font(17))
+                            .font(Brand.font(18))
                             .foregroundStyle(.primary)
-                        HStack(spacing: 5) {
-                            Image(systemName: task.kind.symbol).foregroundStyle(task.kind.color)
-                            Text("\(task.kind.needs) · \(CareSchedule.describe(task.due))")
-                                .foregroundStyle(CareSchedule.days(until: task.due) < 0 ? Brand.accent : .secondary)
+                        HStack(spacing: 4) {
+                            Text(task.kind.needs)
+                            Text("·")
+                            Text(CareSchedule.describe(task.due))
+                                .foregroundStyle(late ? Brand.accent : .secondary)
+                                .fontWeight(late ? .semibold : .regular)
                         }
-                        .font(.subheadline.weight(.medium))
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
                     }
                     Spacer(minLength: 0)
                 }
                 .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
-            CareButton(kind: task.kind, size: upcoming ? 38 : 46, action: action)
-                .opacity(upcoming ? 0.55 : 1)
+            CareButton(kind: task.kind, size: 40, quiet: upcoming, action: action)
         }
-        .card(padding: 14)
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
     }
 }
 

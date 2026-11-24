@@ -1,7 +1,7 @@
 import PhotosUI
 import SwiftUI
 
-/// A plant's photo, or its symbol on its colour, in a circle.
+/// A plant's photo, or its symbol in its colour on a pale wash of it, in a circle.
 struct PlantAvatar: View {
     let plant: Plant
     var size: CGFloat = 48
@@ -11,11 +11,12 @@ struct PlantAvatar: View {
             if let data = plant.photo, let image = UIImage(data: data) {
                 Image(uiImage: image).resizable().scaledToFill()
             } else {
+                let tint = Brand.plantTint(plant.tint)
                 Image(systemName: plant.symbol)
-                    .font(.system(size: size * 0.44, weight: .semibold))
-                    .foregroundStyle(.white)
+                    .font(.system(size: size * 0.42, weight: .medium))
+                    .foregroundStyle(tint)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(Brand.plantTint(plant.tint).gradient)
+                    .background(tint.opacity(0.16))
             }
         }
         .frame(width: size, height: size)
@@ -24,50 +25,67 @@ struct PlantAvatar: View {
     }
 }
 
-/// The small "PRO" capsule on locked controls.
+/// The small outlined "PRO" tag on locked controls.
 struct ProBadge: View {
     var body: some View {
         Text("PRO")
-            .font(Brand.font(11, weight: .heavy))
-            .foregroundStyle(Brand.onAccent)
-            .padding(.horizontal, 7)
-            .padding(.vertical, 3)
-            .background(Brand.accent, in: Capsule())
+            .font(.system(size: 10, weight: .semibold))
+            .tracking(0.8)
+            .foregroundStyle(Brand.accent)
+            .padding(.horizontal, 6)
+            .padding(.vertical, 2.5)
+            .overlay(Capsule().strokeBorder(Brand.accent.opacity(0.6), lineWidth: 1))
             .accessibilityLabel("Sprout Pro")
     }
 }
 
-/// A round button that logs one kind of care.
+/// A round button that logs one kind of care: the care's colour on a pale wash of it. `quiet` drops
+/// the colour, for tasks that aren't due yet.
 struct CareButton: View {
     let kind: CareKind
     var size: CGFloat = 44
+    var quiet = false
     let action: () -> Void
 
     var body: some View {
+        let color = quiet ? Color.secondary : kind.color
         Button(action: action) {
             Image(systemName: kind.symbol)
-                .font(.system(size: size * 0.4, weight: .semibold))
-                .foregroundStyle(.white)
+                .font(.system(size: size * 0.4, weight: .medium))
+                .foregroundStyle(color)
                 .frame(width: size, height: size)
-                .background(kind.color, in: Circle())
+                .background(color.opacity(quiet ? 0.10 : 0.15), in: Circle())
         }
         .buttonStyle(.plain)
         .accessibilityLabel("Log \(kind.label.lowercased())")
     }
 }
 
-/// A section heading above cards.
+/// A small-caps label above a group, like a heading in a field notebook.
 struct SectionTitle: View {
     let title: String
     var trailing: AnyView? = nil
 
     var body: some View {
-        HStack {
-            Text(title).font(Brand.font(20))
+        HStack(alignment: .firstTextBaseline) {
+            Text(title.uppercased())
+                .font(.footnote.weight(.semibold))
+                .tracking(0.8)
+                .foregroundStyle(.secondary)
+                .accessibilityAddTraits(.isHeader)
             Spacer()
             trailing
         }
         .padding(.horizontal, 4)
+    }
+}
+
+/// A hairline between rows inside a card, inset to line up with the text.
+struct RowDivider: View {
+    var inset: CGFloat = 0
+
+    var body: some View {
+        Rectangle().fill(Brand.hairline).frame(height: 0.5).padding(.leading, inset)
     }
 }
 
@@ -105,8 +123,9 @@ struct UndoBanner: View {
         }
         .padding(.horizontal, 18)
         .padding(.vertical, 14)
-        .background(.regularMaterial, in: Capsule())
-        .shadow(color: .black.opacity(0.12), radius: 12, y: 4)
+        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: Brand.radius, style: .continuous))
+        .overlay(RoundedRectangle(cornerRadius: Brand.radius, style: .continuous).strokeBorder(Brand.hairline, lineWidth: 0.5))
+        .shadow(color: .black.opacity(0.08), radius: 10, y: 3)
         .padding(.horizontal, 20)
         .padding(.bottom, 10)
         .transition(.move(edge: .bottom).combined(with: .opacity))

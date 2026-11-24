@@ -101,14 +101,14 @@ private struct PlantCard: View {
     let plant: Plant
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            PlantAvatar(plant: plant, size: 64)
-            VStack(alignment: .leading, spacing: 2) {
+        VStack(alignment: .leading, spacing: 12) {
+            PlantAvatar(plant: plant, size: 52)
+            VStack(alignment: .leading, spacing: 1) {
                 Text(plant.name)
-                    .font(Brand.font(17))
+                    .font(Brand.font(18))
                     .lineLimit(1)
                 Text(plant.species.isEmpty ? " " : plant.species)
-                    .font(.caption)
+                    .font(Brand.font(13, weight: .regular))
                     .italic()
                     .foregroundStyle(.secondary)
                     .lineLimit(1)
@@ -116,14 +116,22 @@ private struct PlantCard: View {
             if let due = plant.nextDue(.water) {
                 let late = CareSchedule.days(until: due) <= 0
                 Label(CareSchedule.describe(due), systemImage: "drop.fill")
-                    .font(.caption.weight(.semibold))
-                    .foregroundStyle(late ? .white : Brand.water)
-                    .padding(.horizontal, 9)
-                    .padding(.vertical, 5)
-                    .background(late ? Brand.water : Brand.water.opacity(0.12), in: Capsule())
+                    .labelStyle(DueLabelStyle())
+                    .font(.caption.weight(late ? .semibold : .regular))
+                    .foregroundStyle(late ? Brand.water : .secondary)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .card(padding: 14)
+    }
+}
+
+/// A small drop and a date, tighter than the default label spacing.
+private struct DueLabelStyle: LabelStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        HStack(spacing: 4) {
+            configuration.icon.foregroundStyle(Brand.water)
+            configuration.title
+        }
     }
 }

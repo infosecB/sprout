@@ -43,10 +43,24 @@ enum Brand {
         plantTints[((index % plantTints.count) + plantTints.count) % plantTints.count]
     }
 
-    /// Display type: headings, big numbers, the paywall title.
-    static func font(_ size: CGFloat, weight: Font.Weight = .bold) -> Font {
-        .system(size: size, weight: weight, design: .rounded)
+    /// Display type: headings, plant names, big numbers. A serif (New York) gives Sprout the feel of
+    /// a field guide or a gardener's notebook; body text stays in the system sans. Serifs look clumsy
+    /// above semibold, so heavier weights are capped there.
+    static func font(_ size: CGFloat, weight: Font.Weight = .semibold) -> Font {
+        let capped: Font.Weight = [.bold, .heavy, .black].contains(weight) ? .semibold : weight
+        return .system(size: size, weight: capped, design: .serif)
     }
+
+    /// The `UIFont` twin of `font(_:weight:)`, for navigation bar titles.
+    static func uiFont(_ size: CGFloat, weight: UIFont.Weight = .semibold) -> UIFont {
+        let base = UIFont.systemFont(ofSize: size, weight: weight)
+        return base.fontDescriptor.withDesign(.serif).map { UIFont(descriptor: $0, size: size) } ?? base
+    }
+
+    /// Corner radius for grouped surfaces. Kept modest so the screen reads as paper, not bubbles.
+    static let radius: CGFloat = 14
+    /// The thin edge around surfaces and between rows, used instead of drop shadows.
+    static let hairline = Color.primary.opacity(0.08)
 
     /// The edge margin for a screen of `size`: roomier on an iPad or an unfolded iPhone Duo.
     static func margin(for size: CGSize) -> CGFloat {
@@ -61,10 +75,12 @@ enum Brand {
 }
 
 extension View {
-    /// A rounded card on `Brand.surface`.
+    /// A grouped surface on `Brand.surface` with a hairline edge. Group related rows inside one card
+    /// rather than giving every row its own.
     func card(padding: CGFloat = 18) -> some View {
-        self.padding(padding)
-            .background(Brand.surface, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
-            .shadow(color: .black.opacity(0.04), radius: 8, y: 2)
+        let shape = RoundedRectangle(cornerRadius: Brand.radius, style: .continuous)
+        return self.padding(padding)
+            .background(Brand.surface, in: shape)
+            .overlay(shape.strokeBorder(Brand.hairline, lineWidth: 0.5))
     }
 }
